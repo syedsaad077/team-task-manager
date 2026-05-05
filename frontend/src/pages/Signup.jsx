@@ -73,17 +73,7 @@ const Signup = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">Role</label>
-            <select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all bg-white"
-            >
-              <option value="member">Member</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+          {/* Role is always Member on signup. Admin accounts are created internally. */}
 
           <button
             type="submit"

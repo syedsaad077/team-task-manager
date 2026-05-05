@@ -1,6 +1,6 @@
 # 🚀 Team Task Manager
 
-> **Live Demo:** [team-task-manager.up.railway.app](https://rare-contentment-production-d170.up.railway.app) &nbsp;|&nbsp; **Backend API:** [team-task-manager-production-6ac91.up.railway.app](https://team-task-manager-production-6ac91.up.railway.app)
+> **Live Demo:** [team-task-manager-07.up.railway.app](https://team-task-manager-07.up.railway.app) &nbsp;|&nbsp; **Backend API:** [team-task-manager-production-6ac91.up.railway.app](https://team-task-manager-production-6ac91.up.railway.app)
 
 A full-stack collaborative task management platform built with the **MERN stack** (MongoDB, Express, React, Node.js). Designed for teams with strict role-based access control, real-time-like notifications, and a clean dark-mode UI.
 
@@ -136,7 +136,7 @@ Team Task Manager/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/team-task-manager.git
+git clone https://github.com/syedsaad077/team-task-manager.git
 cd team-task-manager
 ```
 
