@@ -46,8 +46,8 @@ const getProjects = async (req, res) => {
     let filter = {};
     
     if (req.user.role === 'admin') {
-      // Admin only sees projects they created
-      filter = { createdBy: req.user._id };
+      // Admin sees projects they CREATED or were explicitly ADDED TO as a member
+      filter = { $or: [{ createdBy: req.user._id }, { members: req.user._id }] };
     } else {
       // Member only sees projects they are added to
       filter = { members: req.user._id };

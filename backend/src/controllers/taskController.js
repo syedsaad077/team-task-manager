@@ -82,14 +82,15 @@ const getTasks = async (req, res) => {
     if (status) filter.status = status;
 
     if (req.user.role === 'admin') {
-      // Admin only sees tasks from projects THEY created
-      const adminProjects = await Project.find({ createdBy: req.user._id }).select('_id');
+      // Admin sees tasks from projects they CREATED or were ADDED TO as a member
+      const adminProjects = await Project.find({
+        $or: [{ createdBy: req.user._id }, { members: req.user._id }]
+      }).select('_id');
       const adminProjectIds = adminProjects.map(p => p._id);
 
       if (filter.projectId) {
-        // Verify the requested project belongs to this admin
-        const isOwner = adminProjectIds.some(id => id.toString() === filter.projectId);
-        if (!isOwner) return res.status(200).json([]);
+        const hasAccess = adminProjectIds.some(id => id.toString() === filter.projectId);
+        if (!hasAccess) return res.status(200).json([]);
       } else {
         filter.projectId = { $in: adminProjectIds };
       }
