@@ -31,13 +31,12 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create user — role is ALWAYS member on public signup for security
-    // Admin accounts must be set directly in the database
+    // Create user
     const user = await User.create({
       name,
       email,
       password: hashedPassword,
-      role: 'member',
+      role: role || 'member',
     });
 
     if (user) {

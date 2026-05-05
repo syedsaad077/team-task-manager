@@ -45,8 +45,11 @@ const getProjects = async (req, res) => {
   try {
     let filter = {};
     
-    // If user is a member, they only see projects they are a part of
-    if (req.user.role !== 'admin') {
+    if (req.user.role === 'admin') {
+      // Admin only sees projects they created
+      filter = { createdBy: req.user._id };
+    } else {
+      // Member only sees projects they are added to
       filter = { members: req.user._id };
     }
 

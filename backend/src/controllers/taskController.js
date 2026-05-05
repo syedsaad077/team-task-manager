@@ -81,23 +81,29 @@ const getTasks = async (req, res) => {
     if (assignedTo) filter.assignedTo = assignedTo;
     if (status) filter.status = status;
 
-    // Enforce data isolation for members
-    if (req.user.role !== 'admin') {
-      // Find projects the user is a member of
-      const userProjects = await Project.find({ members: req.user._id }).select('_id');
-      const projectIds = userProjects.map(p => p._id);
-      
+    if (req.user.role === 'admin') {
+      // Admin only sees tasks from projects THEY created
+      const adminProjects = await Project.find({ createdBy: req.user._id }).select('_id');
+      const adminProjectIds = adminProjects.map(p => p._id);
+
+      if (filter.projectId) {
+        // Verify the requested project belongs to this admin
+        const isOwner = adminProjectIds.some(id => id.toString() === filter.projectId);
+        if (!isOwner) return res.status(200).json([]);
+      } else {
+        filter.projectId = { $in: adminProjectIds };
+      }
+    } else {
       // STRICT ISOLATION: Members ONLY see tasks specifically assigned to them
       filter.assignedTo = req.user._id;
 
-      // If they asked for a specific project, verify they are in it
+      const userProjects = await Project.find({ members: req.user._id }).select('_id');
+      const projectIds = userProjects.map(p => p._id);
+
       if (filter.projectId) {
         const isMember = projectIds.some(id => id.toString() === filter.projectId);
-        if (!isMember) {
-          return res.status(200).json([]); // Return empty array if not a member
-        }
+        if (!isMember) return res.status(200).json([]);
       } else {
-        // Otherwise, only show tasks from projects they belong to
         filter.projectId = { $in: projectIds };
       }
     }
