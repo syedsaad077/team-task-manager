@@ -229,7 +229,13 @@ To send real emails via Gmail:
 
 ## 📸 Screenshots
 
-> Dashboard, Tasks, Projects, and Notification Bell — all with full dark mode support.
+| Dashboard | Tasks |
+|----------|------|
+| ![](screenshots/dashboard.png) | ![](screenshots/tasks.png) |
+
+| Projects | Notifications |
+|----------|--------------|
+| ![](screenshots/projects.png) | ![](screenshots/notifications.png) |
 
 ---
 
